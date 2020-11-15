@@ -21,24 +21,34 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    firebase.firestore().collection('posts').get().then((sc) => {
-      const post = [];
-      sc.forEach((doc) => {
-        post.push(doc.data());
-      });
+    firebase.firestore().collection('posts').get()
+      .then((sc) => {
+        const post = [];
+        sc.forEach((doc) => {
+          post.push(doc.data());
+        });
 
-      setPosts(post);
-    });
+        setPosts(post);
+      });
     firebase.firestore().collection('posts').onSnapshot((querySnapshot) => {
       setPosts(querySnapshot.docs.map((doc) => doc.data()));
     });
   }, []);
 
-  const processedPosts = posts.map((post) => (
+  const processedPosts = posts.sort((p1, p2) => {
+    let returnVal;
+    if (p1.date > p2.date) {
+      returnVal = 1;
+    } else {
+      returnVal = -1;
+    }
+    return returnVal;
+  }).map((post) => (
     <Post
       title={post.title}
       body={post.body}
       author={post.author}
+      date={post.date}
     />
   ));
 

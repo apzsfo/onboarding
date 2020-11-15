@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Post({ title, body, author }) {
+export default function Post({
+  title, body, author, date,
+}) {
   //   const [text, setText] = useState(''); // use empty string as our initial value
   // text that is actually displayed to the screen
   //   const [displayText, setDisplayText] = useState('');
   // return an input that displays our text whenever we click the button
-  const post = `${title}: ${body} - ${author}`;
+  const post = `${title}: ${body} - ${author} (${date})`;
   //   console.log(displayText);
   return (
     <>
@@ -23,4 +25,5 @@ Post.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
 };
